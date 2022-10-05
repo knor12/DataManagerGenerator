@@ -5,11 +5,12 @@ from datetime import date
 
 class variable:
 
-    def __init__(self, name, variableType="uint32_t", prefix="ui32",  default=0, notification=False, callbackFunction="" , checkRange= False, minimum=-4026531830 , maximum=4026531839):
+    def __init__(self, name, variableType="uint32_t", prefix="ui32",  default=0, notification=False, onlyNotifyOnFreshValue = True, callbackFunction="" , checkRange= False, minimum=-4026531830 , maximum=4026531839):
         self.name = prefix+"_"+name
         self.variableType = variableType
         self.default = default
         self.notification=notification
+        self.onlyNotifyOnFreshValue=onlyNotifyOnFreshValue
         self.callbackFunction=callbackFunction
         self.checkRange=checkRange
         self.minimum=minimum
@@ -60,6 +61,7 @@ class variable:
         variableType = self.variableType
         default = self.default
         callbackFunction=""
+        onlyNotifyOnFreshValue=""
         rangecheck=""
         out = ""
         if self.callbackFunction !="":
@@ -68,9 +70,12 @@ class variable:
             out += f"extern void {self.callbackFunction}({variableType});\n"
         
         if self.checkRange:
-            rangecheck+='/*check if the assigned value within range*/\n                    '
+            rangecheck+='/*check if the assigned value within range*/\n    '
             rangecheck+=f'if ((x < {self.minimum})|| (x > {self.maximum})){{return; }}'
-
+        if self.onlyNotifyOnFreshValue:
+            onlyNotifyOnFreshValue=f'/*check if we have a fresh value*/\n    '
+            onlyNotifyOnFreshValue+=f'if (x!={name})'
+            
         out += f"/*define {name}*/\n"
         if (notification):
             out += f"#define {name}_default ({default}) \n"
@@ -82,26 +87,27 @@ class variable:
             
             out += f"/*setter*/\n"
             if "0" == "0":
-                out += f"void set_{name}({variableType} x)\n\
-                {{\n\
-                    {rangecheck}\n\
-                    /*check if we have a fresh value*/\n\
-                    if (x!={name})\n\
-                    {{\n\
-                        /*see if we need to notify callback functions*/\n\
-                        {callbackFunction}\n\
-                        if(({name}_callback != 0))\n\
-                        {{\n\
-                            (*{name}_callback)(x);\n\
-                        }}\n\
-                    }}\n\
-                    {name} = x;\n\
-                }};\n"    
+                out += f"\
+void set_{name}({variableType} x)\n\
+{{\n\
+    {rangecheck}\n\
+    {onlyNotifyOnFreshValue}\n\
+    {{\n\
+        /*see if we need to notify callback functions*/\n\
+        {callbackFunction}\n\
+        if(({name}_callback != 0))\n\
+        {{\n\
+            (*{name}_callback)(x);\n\
+        }}\n\
+    }}\n\
+    {name} = x;\n\
+}};\n"    
             out += f"/*setter of call back function*/\n"
-            out += f"void set_{name}_callback({name}_callback_t i)\n\
-            {{\n\
-              {name}_callback = i;\n\
-            }}\n"
+            out += f"\
+void set_{name}_callback({name}_callback_t i)\n\
+{{\n\
+    {name}_callback = i;\n\
+}}\n"
             out += f"\n\n"
         
         
@@ -204,7 +210,7 @@ variables= []
 variables.append(variable(name="var3", variableType="uint32_t",prefix="ui32",default=123,notification=True,callbackFunction="var3_notify",checkRange= True, minimum=0 , maximum=500))
 variables.append(variable(name="var1", variableType="uint32_t",prefix="ui32",default=100,notification=False))
 variables.append(variable(name="var2", variableType="uint32_t",prefix="ui32",default=100,notification=False))
-variables.append(variable(name="var4", variableType="uint32_t",prefix="ui32",default=123,notification=True,callbackFunction="var4_notify"))
+variables.append(variable(name="var4", variableType="uint32_t",prefix="ui32",default=123,notification=True,onlyNotifyOnFreshValue = False, callbackFunction="var4_notify"))
 variables.append(variable(name="var4", variableType="bool",prefix="is",default="TRUE",notification=True, callbackFunction="is_var4_notify"))
 
 #headers for the DataManager.h
