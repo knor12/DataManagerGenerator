@@ -168,7 +168,9 @@ class DataManagerGenerator:
         #add variables related stuff
         i = 0
         while i < len(self.variableList):
+            out+=f'/*****************************start of {self.variableList[i].name} definitions*************************************/\n'
             out+=self.variableList[i].get_header_definition()
+            out+=f'/*****************************end of {self.variableList[i].name} definitions*************************************/\n\n'
             i = i + 1
         
         #close the guard
@@ -193,7 +195,9 @@ class DataManagerGenerator:
         #add variables related stuff
         i = 0
         while i < len(variables):
+            out+=f'/*****************************start of {self.variableList[i].name} definitions*************************************/\n'
             out+=variables[i].get_source_implementation()
+            out+=f'/*****************************end of {self.variableList[i].name} definitions*************************************/\n\n'
             i = i + 1
   
         print(out)
