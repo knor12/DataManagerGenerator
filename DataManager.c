@@ -16,7 +16,7 @@
 extern void var3_notify(uint32_t);
 /*define ui32_var3*/
 #define ui32_var3_default (123) 
-static uint32_t ui32_var3 = ui32_var3_default;
+uint32_t ui32_var3 = ui32_var3_default;
 /*getter*/
 uint32_t DataManager_get_ui32_var3(){return ui32_var3;}
 /*callback function pointer*/
@@ -68,7 +68,7 @@ uint32_t ui32_var2 = ui32_var2_default;
 extern void var4_notify(uint32_t);
 /*define ui32_var4*/
 #define ui32_var4_default (123) 
-static uint32_t ui32_var4 = ui32_var4_default;
+uint32_t ui32_var4 = ui32_var4_default;
 /*getter*/
 uint32_t DataManager_get_ui32_var4(){return ui32_var4;}
 /*callback function pointer*/
@@ -102,7 +102,7 @@ void DataManager_set_ui32_var4_callback(ui32_var4_callback_t i)
 extern void is_var4_notify(bool);
 /*define is_var4*/
 #define is_var4_default (true) 
-static bool is_var4 = is_var4_default;
+bool is_var4 = is_var4_default;
 /*getter*/
 bool DataManager_get_is_var4(){return is_var4;}
 /*callback function pointer*/

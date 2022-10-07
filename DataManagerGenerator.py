@@ -83,7 +83,7 @@ class variable:
         out += f"/*define {name}*/\n"
         if (notification):
             out += f"#define {name}_default ({default}) \n"
-            out += f"static {variableType} {name} = {name}_default;\n"
+            out += f"{variableType} {name} = {name}_default;\n"
             out += f"/*getter*/\n"
             out += f"{variableType} {accessors_prefix}_get_{name}(){{return {name};}}\n"
             out +="/*callback function pointer*/\n"
