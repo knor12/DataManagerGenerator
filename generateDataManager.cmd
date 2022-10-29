@@ -1,0 +1,1 @@
+python3 .\DataManagerCompiler\DataManagerCompiler.py .\Data.csv
