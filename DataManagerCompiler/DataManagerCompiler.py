@@ -44,10 +44,16 @@ if __name__ == "__main__":
         words = line.split(",")
         print(f'length={words}')
         if len (words) >=2:
+            temp =  words[1]
+            temp = temp.replace("\"#", "#")
+            temp = temp.replace("\"\"\"", "\"")
+            temp = temp.replace("\"\"", "\"")
             if (words[0]=="$INCLUDE_H"):
-                h_headers.append(f'{words[1]}\n')
+                h_headers.append(f'{temp}\n')
             if (words[0]=="$INCLUDE_C"):
-                c_headers.append(f'{words[1]}\n')
+                c_headers.append(f"{temp}\n")
+                #c_headers.append(f'{words[1]}\n')
+                
             if (words[0]=="$NAME"):
                 moduleName_=words[1]
                 print(f"=========================================NAMEDETECTED={words[1]}n ")

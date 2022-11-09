@@ -31,6 +31,7 @@ class variable:
         default = self.default
         callback_type= f'{name}_callback_t'
         accessors_prefix = self.accessors_prefix
+        checkRange = self.checkRange
         
         out = ""
         if (notification):
@@ -55,7 +56,10 @@ class variable:
             #define
             out += f"extern {variableType} {name};\n"
             #setter
-            out += f"#define {accessors_prefix}_set_{name}(x) {{ {name} = x ; }}\n"
+            if self.checkRange:
+                out += f"#define {accessors_prefix}_set_{name}(x) {{ if ((x>= {self.minimum} )&&( x<= {self.maximum})){{ {name} = x ; }} }}\n"
+            else:
+                out += f"#define {accessors_prefix}_set_{name}(x) {{ {name} = x ; }}\n"
             #getter
             out += f"#define {accessors_prefix}_get_{name}()({name})\n"
             out += "\n\n"
@@ -74,7 +78,7 @@ class variable:
         onlyNotifyOnFreshValue=""
         rangecheck=""
         out = ""
-        if self.callbackFunction !="":
+        if self.callbackFunction !="" and self.notification:
             callbackFunction= f'{self.callbackFunction}(x);'
             out+='/*define function as external to be called on event*/\n'
             out += f"extern void {self.callbackFunction}({variableType});\n"

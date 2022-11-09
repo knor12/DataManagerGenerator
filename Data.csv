@@ -1,5 +1,5 @@
-﻿Leave First line blank,,
-$NAME,DataManager,,,
+﻿Leave First line blank,,,,,,,,,,,
+$NAME,DataManager,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 $INCLUDE_H,#include <stdint.h>,,,,,,,,,,
@@ -7,16 +7,13 @@ $INCLUDE_H,#include <stdbool.h>,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
-$INCLUDE_C,#include "DataManager.h",,,,,,,,,,
+$INCLUDE_C,"#include ""DataManager.h""",,,,,,,,,,
 ,,,,,,,,,,,n
 ,,,,,,,,,,,
-Variable ,Name,type,prefix,default value,"notification
-(True/False)",callback,"Check Range
-(True/False)",minimum,maximum,"onlyNotify
-OnFreshValue
-(True/False)",
+Variable ,Name,type,prefix,default value,notification(True/False),callback,Check Range(True/False),minimum,maximum,onlyNotify OnFreshValue (True/False),
 $VARIABLE,var3,uint32_t,ui32,123,TRUE,var3_notify,TRUE,0,500,FALSE,
 $VARIABLE,var1,uint32_t,ui32,100,FALSE,,,,,,
 $VARIABLE,var2,uint32_t,ui32,100,FALSE,,,,,,
 $VARIABLE,var4,uint32_t,ui32,123,TRUE,var4_notify,,,,TRUE,
 $VARIABLE,var4,bool,is,1,TRUE,is_var4_notify,,,,,
+$VARIABLE,var5,uint16_t,ui16,3,FALSE,NA,TRUE,2,50,FALSE,
