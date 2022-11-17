@@ -83,6 +83,9 @@ class DataManagerGenerator:
         while i < len(self.CFileHeadersList):
             out+=self.CFileHeadersList[i]
             i = i + 1
+        
+        #add the cpp guard start 
+        out+=self.CPPGuardStart    
 
         #add variables related stuff
         i = 0
@@ -92,7 +95,10 @@ class DataManagerGenerator:
             out+=self.variableList[i].get_source_implementation()
             out+=f'/*****************************end of {self.variableList[i].name} definitions*************************************/\n\n'
             i = i + 1
-  
+
+        #add the cpp guard end 
+        out+=self.CPPGuardEnd
+        
         print(out)
         f = open(f'{self.moduleName}.c', "w")
         f.write(out)
