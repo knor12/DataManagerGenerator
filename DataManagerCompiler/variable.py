@@ -92,8 +92,8 @@ class variable:
             
         out += f"/*define {name}*/\n"
         if (notification):
-            out += f"#define {name}_default ({default}) \n"
-            out += f"{variableType} {name} = {name}_default;\n"
+            out += f"#define {name.upper()}_DEFAULT ({default}) \n"
+            out += f"{variableType} {name} = {name.upper()}_DEFAULT;\n"
             out += f"/*getter*/\n"
             out += f"{variableType} {accessors_prefix}_get_{name}(){{return {name};}}\n"
             out +="/*callback function pointer*/\n"
@@ -128,8 +128,8 @@ void {accessors_prefix}_set_{name}_callback({name}_callback_t i)\n\
         else: #not notification
             #out += f"/*define {name}*/\n"
             #define
-            out += f"#define {name}_default ({default}) \n"
-            out += f"{variableType} {name} = {name}_default;\n"
+            out += f"#define {name.upper()}_DEFAULT ({default}) \n"
+            out += f"{variableType} {name} = {name.upper()}_DEFAULT;\n"
             out += f"\n\n"
             
         return out

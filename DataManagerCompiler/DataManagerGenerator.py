@@ -4,6 +4,7 @@ __license__ = "MIT License"
 
 from datetime import date
 from variable import *
+from Beautifier import *
    
 class DataManagerGenerator:
 
@@ -73,6 +74,11 @@ class DataManagerGenerator:
         f.write(out)
         f.close()
         
+        #formating file
+        beautifier =Beautifier()
+        beautifier.beatify(f'{self.moduleName}.h')
+        
+        
         
     def generateSourceFile(self):
     
@@ -103,4 +109,8 @@ class DataManagerGenerator:
         f = open(f'{self.moduleName}.c', "w")
         f.write(out)
         f.close()
+        
+        #formating file
+        beautifier =Beautifier()
+        beautifier.beatify(f'{self.moduleName}.c')
         
