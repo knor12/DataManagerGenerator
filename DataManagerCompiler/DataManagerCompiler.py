@@ -4,6 +4,7 @@ __license__ = "MIT License"
 
 from DataManagerGenerator import *
 from variable import *
+from enumeration import *
 import sys
 import os
 
@@ -28,8 +29,10 @@ if __name__ == "__main__":
     #create lists to store the data parsed
     h_headers = []
     c_headers = []
-    variables= []
+    variables = []
+    enumerations = []
     moduleName_=""
+    enumeration = None
     
 
     
@@ -95,11 +98,27 @@ if __name__ == "__main__":
                 print(f'appending {var}\n')    
                 variables.append(var)
                 
-    genrator = DataManagerGenerator(variableList=variables, moduleName=moduleName_, CFileHeadersList=c_headers, HFileHeaderList =h_headers)
+        #look for enumeration data
+        if (words[0]=="$ENUMTYPE"):
+            enumeration = Enumeration( name=words[1],  comment=words[2] )
+            enumerations.append(enumeration)
+            
+        if (words[1]=="$ENUMITEM") and (not (enumeration is None)):
+            enumItem = EnumItem(name=words[2], value=words[3], comment=words[4] )
+            enumeration.addItem(enumItem)
+            
+            
+                
+    genrator = DataManagerGenerator(variableList=variables,enumerationList=enumerations,  moduleName=moduleName_, CFileHeadersList=c_headers, HFileHeaderList =h_headers)
     genrator.generateSourceFile()
     genrator.generateHeaderFile()
+    genrator.generateTypeDefFile()
     
     
     print("#######################printing variables#######################\n")
     for var in variables:
         print(var)
+    
+    print("#######################printing enumerations#######################\n")    
+    for enum in enumerations:
+        print (enum)
