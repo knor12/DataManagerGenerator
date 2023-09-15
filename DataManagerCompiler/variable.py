@@ -78,10 +78,14 @@ class variable:
         onlyNotifyOnFreshValue=""
         rangecheck=""
         out = ""
-        if self.callbackFunction !="" and self.notification:
-            callbackFunction= f'{self.callbackFunction}(x);'
-            out+='/*define function as external to be called on event*/\n'
-            out += f"extern void {self.callbackFunction}({variableType});\n"
+        callbackFunctions =[]
+        #possibility support of multiple ballback functions 
+        callbackFunctions = self.callbackFunction.split(" ")
+        for callback in callbackFunctions:
+            if callback !="" and self.notification:
+                callbackFunction+= f'{callback}(x);\n'
+                out+='/*define function as external to be called on event*/\n'
+                out += f"extern void {callback}({variableType});\n"
         
         if self.checkRange:
             rangecheck+='/*check if the assigned value within range*/\n    '
