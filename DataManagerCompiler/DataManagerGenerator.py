@@ -58,7 +58,7 @@ class DataManagerGenerator:
             
         #add typedef if exist
         if len(self.enumerationList)>0:
-             out+=f'#include "{self.moduleName}_typedef.h\n"'
+             out+=f'#include "{self.moduleName}_typedef.h"\n'
 
         #add variables related stuff
         i = 0
