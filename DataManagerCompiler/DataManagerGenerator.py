@@ -9,7 +9,7 @@ from Beautifier import *
 class DataManagerGenerator:
 
     def __init__(self, variableList=[],enumerationList=[], moduleName="DataManager", accessors_prefix="DataManager", CFileHeadersList=[], HFileHeaderList=[] ):
-        self.Version = "V0.01"
+        self.Version = "V0.02"
         self.variableList = variableList
         self.enumerationList = enumerationList
         self.moduleName = moduleName
